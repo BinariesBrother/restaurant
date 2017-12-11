@@ -1,16 +1,29 @@
 .sommaire-title {
+  position: relative;
   font-family: "Manuscrite";
-  color: goldenrod;
+  color: black;
   margin: 0;
+  padding: 0;
   font-size: 5.9vw;
-  text-shadow: 0px 0px 30px #000
+  padding-left: 1%;
+  /*text-shadow: 1px 1px 8px rgba(247, 91, 0, 0.877);*/
+}
+
+.sommaire-title::after {
+  content: '';
+  display: block;
+  height: 0.05em;
+  width: 70%;
+  position: absolute;
+  bottom: 0.444em;
+  left: 5%;
+  background: linear-gradient(90deg, black 60%, transparent);
 }
 
 .sommaire {
   height: 100%;
   width: 100%;
-  justify-content: center;
-  background: linear-gradient( rgba(250, 250, 250, 1), rgba(250, 250, 250, 1));
+  background: rgb(255, 237, 195);
   border: solid 1px goldenrod;
 }
 
