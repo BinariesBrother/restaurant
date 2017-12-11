@@ -1,7 +1,6 @@
 <div class="couverture">
-  <h1 class="couverture-title">
+  <h1 class="couverture-title" *ngIf="hide">
     <span *ngIf="entete">Un Restaurant</span>
     <span *ngIf="!entete">Bon Appétit</span>
-    <span>{{index}}</span>
   </h1>
 </div>

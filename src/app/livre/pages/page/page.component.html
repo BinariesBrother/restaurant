@@ -1,2 +1,3 @@
 <button class="changePage" (click)="change()" [ngClass]="{'recto':recto,'verso':!recto}">{{recto?'<':'>'}}</button>
-<couverture *ngIf='page.type==="couverture"' [entete]="page.params.get('entete')" [index]="page.params.get('index')"></couverture>
+<couverture *ngIf='page.type==="couverture"' [entete]="page.params.get('entete')" [index]="page.params.get('index')" [hide]="!page.params.get('empty')"></couverture>
+<sommaire *ngIf='page.type==="sommaire"' [index]="page.params.get('index')"></sommaire>

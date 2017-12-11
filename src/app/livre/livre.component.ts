@@ -5,6 +5,7 @@ import { Feuille, FeuilleComponent } from './pages/feuille/feuille.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { Sommaire } from './pages/sommaire/sommaire.component';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -37,12 +38,12 @@ export class LivreComponent implements OnInit {
   constructor(route:ActivatedRoute, router:Router) {
     this.router = router;
     let pages = [
-      new Couverture(true, 0),
-      new Couverture(false, 1),
-      new Couverture(false, 2),
-      new Couverture(false, 3),
-      new Couverture(false, 4),
-      new Couverture(false, 5)
+      new Couverture(true, false, 0),
+      new Couverture(true, true, 1),
+      new Sommaire(2),
+      new Sommaire(3),
+      new Couverture(false, true, 4),
+      new Couverture(false, false, 5)
     ];
     this.startWait = false;
     this.pageHandler = new Subject();
@@ -73,8 +74,8 @@ export class LivreComponent implements OnInit {
 
   affectZindex(){
     this.feuilles.forEach((element, index) => {
-      element.recto.zindex = ""+(this.nbPages - Math.abs(this.page - index*2));
-      element.verso.zindex = ""+(this.nbPages - Math.abs(this.page - index*2+1));
+      element.recto.zindex = ""+(this.nbPages*2 - Math.abs(this.page - index*2));
+      element.verso.zindex = ""+(this.nbPages*2 - Math.abs(this.page - index*2+1));
     });
   }
 

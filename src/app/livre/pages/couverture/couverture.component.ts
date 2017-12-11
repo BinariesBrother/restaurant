@@ -20,10 +20,11 @@ export class CouvertureComponent implements OnInit {
 }
 
 export class Couverture extends Page{
-    constructor(entete, index){
+    constructor(entete:boolean,empty:boolean, index){
         let m = new Map();
         m.set("entete",entete);
         m.set("index",index);
+        m.set("empty",empty);
         super("couverture",m);
     }
 }

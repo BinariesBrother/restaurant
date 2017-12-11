@@ -11,6 +11,7 @@ import { LivreComponent } from './livre/livre.component';
 import { CouvertureComponent } from './livre/pages/couverture/couverture.component';
 import { PageComponent } from './livre/pages/page/page.component';
 import { FeuilleComponent } from './livre/pages/feuille/feuille.component';
+import { SommaireComponent } from './livre/pages/sommaire/sommaire.component';
 
 
 @NgModule({ 
@@ -21,7 +22,8 @@ import { FeuilleComponent } from './livre/pages/feuille/feuille.component';
     LivreComponent,
     CouvertureComponent,
     PageComponent,
-    FeuilleComponent
+    FeuilleComponent,
+    SommaireComponent
   ],
   imports: [
     BrowserModule,
