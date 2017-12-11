@@ -1,0 +1,14 @@
+:host {}
+
+page {
+  left: 50%;
+  position: absolute;
+  width: 50%;
+  transform-origin: left;
+  height: 100%;
+}
+
+page:first-of-type {
+  left: 0;
+  transform-origin: right;
+}

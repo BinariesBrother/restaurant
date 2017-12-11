@@ -1,0 +1,13 @@
+.conteneur {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.livre {
+  height: 95vh;
+  width: 80vw;
+  position: relative;
+}

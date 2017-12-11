@@ -1,0 +1,6 @@
+<div class="conteneur">
+  <div class="livre">
+    <feuille *ngFor="let feuille of feuilles; let idx = index" [feuille]="feuille" [start]="start.bind(this)" [pageHandler]="pageHandler" [end]=" end.bind(this)" [previousPage]="previousPageFunction.bind(this)" [nextPage]="nextPageFunction.bind(this)">
+    </feuille>
+  </div>
+</div>

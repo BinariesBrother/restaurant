@@ -1,0 +1,26 @@
+.livre {
+  display: flex;
+}
+
+.feuille {
+  width: 200px;
+  height: 200px;
+  transition: transform 0.8s linear 0.8s;
+  background-color: red;
+  transform-origin: left;
+}
+
+.verso {
+  background-color: blue;
+  transform-origin: right;
+  margin-left: 0;
+}
+
+.hide {
+  transform: perspective(600) rotateY(-90deg);
+  transition: transform 0.8s linear;
+}
+
+.verso.hide {
+  transform: perspective(600) rotateY(90deg);
+}

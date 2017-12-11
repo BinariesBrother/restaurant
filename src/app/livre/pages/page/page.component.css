@@ -1,0 +1,36 @@
+:host {
+  width: 50%;
+}
+
+.changePage {
+  width: 1em;
+  height: calc(100% - 2px);
+  padding: 0;
+  padding-top: -0.5em;
+  position: absolute;
+  opacity: 0.4;
+  background: rgb(12, 12, 12);
+  border: none;
+  font-family: "Manuscrite";
+  color: goldenrod;
+  font-size: 5em;
+}
+
+.changePage:hover {
+  opacity: 0.9;
+  border-left: solid 1px rgb(17, 17, 17);
+}
+
+.changePage:hover.recto {
+  border-right: solid 1px rgb(17, 17, 17);
+}
+
+.changePage.recto {
+  left: 0;
+  transform: translateX(1px) translateY(1px);
+}
+
+.changePage.verso {
+  right: 0;
+  transform: translateX(-1px) translateY(1px);
+}
