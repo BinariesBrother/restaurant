@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Page } from '../page/page';
+import { GoogleInfo } from '../../../google-sheet/google-info';
 
 @Component({
   selector: 'sommaire',
@@ -20,9 +21,9 @@ export class SommaireComponent implements OnInit {
 
 
 export class Sommaire extends Page{
-  constructor(index){
+  constructor(index:number, infos: GoogleInfo){
       let m = new Map();
       m.set("index",index);
-      super("sommaire",m);
+      super("sommaire",m, infos);
   }
 }

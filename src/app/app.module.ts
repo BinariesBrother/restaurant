@@ -12,7 +12,9 @@ import { CouvertureComponent } from './livre/pages/couverture/couverture.compone
 import { PageComponent } from './livre/pages/page/page.component';
 import { FeuilleComponent } from './livre/pages/feuille/feuille.component';
 import { SommaireComponent } from './livre/pages/sommaire/sommaire.component';
-
+import { GoogleSheetService } from './google-sheet/google-sheet.service';
+import { HttpClientModule } from '@angular/common/http';
+import {SheetWrapperService} from './google-sheet/wrapper/sheet-wrapper.service'
 
 @NgModule({ 
   declarations: [
@@ -28,9 +30,10 @@ import { SommaireComponent } from './livre/pages/sommaire/sommaire.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [GoogleSheetService,SheetWrapperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

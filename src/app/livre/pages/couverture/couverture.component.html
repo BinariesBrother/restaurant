@@ -1,6 +1,7 @@
 <div class="couverture">
   <h1 class="couverture-title" *ngIf="hide">
-    <span *ngIf="entete">Un Restaurant</span>
+    <span *ngIf="entete">{{titre}}</span>
     <span *ngIf="!entete">Bon Appétit</span>
   </h1>
+  <textarea class="description" readonly *ngIf="entete && !hide">{{description}}</textarea>
 </div>

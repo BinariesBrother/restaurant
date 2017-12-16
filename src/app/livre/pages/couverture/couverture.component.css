@@ -16,6 +16,20 @@
   border: solid 1px goldenrod;
 }
 
+.description:focus {
+  outline: none !important;
+  border-color: transparent;
+}
+
+.description {
+  height: 80%;
+  width: 80%;
+  background: transparent;
+  color: white;
+  resize: none;
+  border: none;
+}
+
 :host {
   flex: 1;
   width: 50%;

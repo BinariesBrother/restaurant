@@ -3,9 +3,18 @@ import {Couverture} from './pages/couverture/couverture.component';
 import { Page } from './pages/page/page';
 import { Feuille, FeuilleComponent } from './pages/feuille/feuille.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Sommaire } from './pages/sommaire/sommaire.component';
+import { GoogleSheetService, Sheet } from '../google-sheet/google-sheet.service';
+import { GoogleInfo } from '../google-sheet/google-info';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+  keyframes
+} from '@angular/animations';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -15,7 +24,18 @@ export enum KEY_CODE {
 @Component({
   selector: 'livre',
   templateUrl: './livre.component.html',
-  styleUrls: ['./livre.component.css']
+  styleUrls: ['./livre.component.css'],
+  animations: [
+    trigger('centre', [
+      state('centre', style({transform: 'translateX(-25%)'})),
+      state('droit', style({transform: 'translateX(0)'})),
+      state('centre-droit', style({transform: 'translateX(25%)'})),
+      transition('centre => droit', animate('200ms linear')),
+      transition('droit => centre', animate('200ms linear')),
+      transition('droit => centre-droit', animate('200ms linear')),
+      transition('centre-droit => droit', animate('200ms linear'))
+    ])
+  ]
 })
 export class LivreComponent implements OnInit {
   
@@ -34,17 +54,26 @@ export class LivreComponent implements OnInit {
   startWait: boolean;
 
   router:Router;
+
+  infos:GoogleInfo;
+
+  loaded:boolean;
   
-  constructor(route:ActivatedRoute, router:Router) {
+  constructor(route:ActivatedRoute, router:Router, googleSheet:GoogleSheetService) {
+    this.loaded = false;
     this.router = router;
+    googleSheet.getInfo().then(data=>this.initAppli(route, data));
+   }
+
+   initAppli(route:ActivatedRoute, infos:GoogleInfo){
+     this.infos = infos;
     let pages = [
-      new Couverture(true, false, 0),
-      new Couverture(true, true, 1),
-      new Sommaire(2),
-      new Sommaire(3),
-      new Couverture(false, true, 4),
-      new Couverture(false, false, 5)
+      new Couverture(true, false, 0, infos),
+      new Couverture(true, true, 1, infos),
+      new Couverture(false, true, 2, infos),
+      new Couverture(false, false, 3, infos)
     ];
+    
     this.startWait = false;
     this.pageHandler = new Subject();
     route.params.subscribe(param=>{
@@ -53,11 +82,13 @@ export class LivreComponent implements OnInit {
         this.page = parseInt(param.page);
         this.nextPage = this.page+2;
         this.previousPage = this.page-2;
-        this.pageHandler.next(this.page);
+        setTimeout(p=>this.pageHandler.next(this.page));
       }
     });
     this.feuilles = this.transformToFeuilles(pages);
     this.nbPages = pages.length;
+    this.loaded = true;
+    setTimeout(p=>this.pageHandler.next(this.page));
    }
 
    start($event){
@@ -103,7 +134,6 @@ export class LivreComponent implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(p=>this.pageHandler.next(this.page));
   }
 
   abs(value){
