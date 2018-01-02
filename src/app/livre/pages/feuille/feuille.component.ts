@@ -62,7 +62,7 @@ export class FeuilleComponent implements OnInit {
     this.pageHandler.subscribe(param=>{
       if(typeof param !== 'undefined'){
         this.begun();
-        this.recto = this.feuille.recto.params.get("index") >= (+param);
+        this.recto = this.feuille.recto.index >= (+param);
       }
     });
   }

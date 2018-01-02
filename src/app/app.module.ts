@@ -14,7 +14,8 @@ import { FeuilleComponent } from './livre/pages/feuille/feuille.component';
 import { SommaireComponent } from './livre/pages/sommaire/sommaire.component';
 import { GoogleSheetService } from './google-sheet/google-sheet.service';
 import { HttpClientModule } from '@angular/common/http';
-import {SheetWrapperService} from './google-sheet/wrapper/sheet-wrapper.service'
+import {SheetWrapperService} from './google-sheet/wrapper/sheet-wrapper.service';
+import { MenuComponent } from './livre/pages/menu/menu.component'
 
 @NgModule({ 
   declarations: [
@@ -25,7 +26,8 @@ import {SheetWrapperService} from './google-sheet/wrapper/sheet-wrapper.service'
     CouvertureComponent,
     PageComponent,
     FeuilleComponent,
-    SommaireComponent
+    SommaireComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

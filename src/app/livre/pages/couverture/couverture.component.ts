@@ -9,11 +9,8 @@ import { GoogleInfo } from '../../../google-sheet/google-info';
 })
 export class CouvertureComponent implements OnInit {
 
-  @Input() entete: boolean;
-  @Input() index: number;
-  @Input() hide: boolean;
-  @Input() titre: string;
-  @Input() description: string;
+  @Input() page: Couverture;
+  
 
   constructor() { }
 
@@ -23,11 +20,12 @@ export class CouvertureComponent implements OnInit {
 }
 
 export class Couverture extends Page{
-    constructor(entete:boolean,empty:boolean, index, info:GoogleInfo){
-        let m = new Map();
-        m.set("entete",entete);
-        m.set("index",index);
-        m.set("empty",empty);
-        super("couverture",m,info);
+  entete:boolean;
+  empty:boolean;
+    constructor(component:any, entete:boolean,empty:boolean, index, info:GoogleInfo){
+        super("couverture",index,info, component);
+        this.entete = entete;
+        this.empty = empty;
+        this.index = index;
     }
 }

@@ -1,0 +1,22 @@
+<div class="conteneur" *ngIf="page.titre">
+  <h2><span class="titre">{{page.titre}}</span><span class="prix">{{page.prix}}€</span></h2>
+  <div class="description">{{page.description}}</div>
+  <div class="transition" *ngIf="page.entrees.length">
+    <div class="plat" *ngFor='let entree of page.entrees; let idx = index'>
+      <div class="separator" *ngIf="idx>0"></div>
+      {{entree.nom}}
+    </div>
+  </div>
+  <div class="transition" *ngIf="page.plats.length">
+    <div class="plat" *ngFor='let plat of page.plats; let idx = index'>
+      <div class="separator" *ngIf="idx>0"></div>
+      {{plat.nom}}
+    </div>
+  </div>
+  <div class="transition" *ngIf="page.desserts.length">
+    <div class="plat" *ngFor='let dessert of page.desserts; let idx = index'>
+      <div class="separator" *ngIf="idx>0"></div>
+      {{dessert.nom}}
+    </div>
+  </div>
+</div>

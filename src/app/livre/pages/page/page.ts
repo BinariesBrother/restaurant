@@ -6,12 +6,12 @@ export class Page{
     niveau:number;
     zindex:String;
     info:GoogleInfo;
+    component:any
 
-    params: Map<String, any>;
-
-    constructor(type: String, map: Map<String, any>, googleInfo:GoogleInfo){
+    constructor(type: String, index:number, googleInfo:GoogleInfo, component:any){
         this.type = type;
-        this.params = map;
         this.info = googleInfo;
+        this.index = index;
+        this.component = component;
     }
 }

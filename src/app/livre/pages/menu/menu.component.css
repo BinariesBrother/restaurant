@@ -1,0 +1,24 @@
+:host {
+  margin: 1em, 0;
+  height: calc(100% - 2em);
+  width: 100%;
+  background: rgb(216, 214, 214);
+  border: solid 1px black;
+  font-family: fantasy;
+}
+
+h2 {
+  text-align: center;
+  transform: translateX(-10%);
+  font-family: "Manuscrite";
+  font-size: 2.5em;
+}
+
+.titre {
+  padding-right: 1em;
+}
+
+.description {
+  font-size: 0.9em;
+  color: rgb(85, 83, 83);
+}

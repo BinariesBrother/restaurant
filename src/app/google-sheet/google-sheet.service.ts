@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import {GoogleInfo} from './google-info';
 
@@ -26,15 +26,37 @@ export class GoogleSheetService {
   }
 
   initInformations():Promise<GoogleInfo>{
-    return this.rest.get("https://spreadsheets.google.com/feeds/list/1pORXVX6pluP9BRUbRnlyg1HkbVpu-c8NHYEESySjKPk/1/public/values?alt=json").toPromise().then(data=>this.recieveData(data));
+    return this.fetchSheet(1).then(data=>this.recieveData(data));
+  }
+
+  fetchSheet(pageNumber:number):Promise<any>{
+    let API:string='https://spreadsheets.google.com/feeds/list/1pORXVX6pluP9BRUbRnlyg1HkbVpu-c8NHYEESySjKPk';
+    return this.rest.get(`${API}/${pageNumber}/public/values?alt=json`).toPromise();
   }
 
   recieveData(data:Object):Promise<GoogleInfo>{
     let result = <GoogleSheetResult> data;
-    this.infos = new GoogleInfo(new Sheet(result.feed));
-    return new Promise<GoogleInfo>((resolve, reject) => {
-      resolve(this.infos);
+    this.infos = new GoogleInfo(new Sheet(result.feed, result.feed.title.$t));
+    return this.completeData();
+  }
+
+  completeData():Promise<GoogleInfo>{
+    return Promise.all(
+      Array.from(new Array(this.infos.pages), (x,i) => i+1).map(i=>this.fetchSheet(i))
+    ).then(values=>{
+      this.infos.sheets = values.map(value=>{
+        let valeur = <object> value;
+        let valeur2 = <GoogleSheetResult> valeur;
+        return valeur2.feed?new Sheet(valeur2.feed, valeur2.feed.title.$t):undefined;
+      }).reduce(function(map, obj, index) {
+        map[obj.title] = obj;
+        return map;
+      }, new Map<string,Sheet>());
+      return new Promise<GoogleInfo>((resolve, reject) => {
+        resolve(this.infos);
+      });
     });
+    
   }
 
 }
@@ -42,15 +64,21 @@ export class GoogleSheetService {
 interface GoogleSheetResult{
   feed:GoogleEntry;
 }
+interface TitleSheet{
+  $t:string;
+}
 
 interface GoogleEntry{
   entry: Array<any>;
+  title:TitleSheet;
 }
 
 export class Sheet{
   rows:Array<GenericRow>;
-  constructor(feed:GoogleEntry){
+  title:string;
+  constructor(feed:GoogleEntry, title:string){
     this.rows = [];
+    this.title = title;
     feed.entry.forEach(element => {
       this.rows.push(new GenericRow(element));
     });

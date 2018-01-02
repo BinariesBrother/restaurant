@@ -1,11 +1,11 @@
 import {Sheet, GenericRow} from './google-sheet.service';
 
 export class GoogleInfo{
-    sheets: Map<number,Sheet>;
+    sheets: Map<string,Sheet>;
     backgroundColor:string;
     titre:string;
     description: string;
-    pages:Array<number>;
+    pages:number;
 
     constructor(sheet:Sheet){
         this.sheets = new Map();
@@ -24,7 +24,7 @@ export class GoogleInfo{
                 this.backgroundColor = value;
                 break;
             case "Pages":
-                this.pages = value.split(',').map(s=>parseInt(s));
+                this.pages = parseInt(value);
                 break;
             case "Description":
                 this.description = value;

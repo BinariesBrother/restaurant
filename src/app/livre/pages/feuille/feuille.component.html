@@ -1,2 +1,2 @@
-<page [page]="feuille.verso" [@turn]="recto==undefined?'':recto?'recto':'verso'" [changePage]="previousPage" [ngStyle]="{'z-index': feuille.verso.zindex}" [recto]="true"></page>
+<page *ngIf="feuille.verso" [page]="feuille.verso" [@turn]="recto==undefined?'':recto?'recto':'verso'" [changePage]="previousPage" [ngStyle]="{'z-index': feuille.verso.zindex}" [recto]="true"></page>
 <page [page]="feuille.recto" [@turn-verso]="recto==undefined?'':!recto?'recto':'verso'" [changePage]="nextPage" (@turn-verso.done)="done($event)" [ngStyle]="{'z-index': feuille.recto.zindex}" [recto]="false"></page>

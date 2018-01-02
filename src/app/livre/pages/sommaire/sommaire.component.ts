@@ -21,9 +21,9 @@ export class SommaireComponent implements OnInit {
 
 
 export class Sommaire extends Page{
-  constructor(index:number, infos: GoogleInfo){
+  constructor(component:any, index:number, infos: GoogleInfo){
       let m = new Map();
       m.set("index",index);
-      super("sommaire",m, infos);
+      super("sommaire", index, infos, component);
   }
 }

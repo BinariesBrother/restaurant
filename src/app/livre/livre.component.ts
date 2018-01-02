@@ -15,6 +15,7 @@ import {
   transition,
   keyframes
 } from '@angular/animations';
+import { SheetWrapperService } from '../google-sheet/wrapper/sheet-wrapper.service';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -39,6 +40,8 @@ export enum KEY_CODE {
 })
 export class LivreComponent implements OnInit {
   
+  sheetWrapperService:SheetWrapperService;
+
   page: number;
 
   feuilles: Array<Feuille>;
@@ -59,36 +62,32 @@ export class LivreComponent implements OnInit {
 
   loaded:boolean;
   
-  constructor(route:ActivatedRoute, router:Router, googleSheet:GoogleSheetService) {
+  constructor(route:ActivatedRoute, router:Router, googleSheet:GoogleSheetService, sheetWrapperService:SheetWrapperService) {
     this.loaded = false;
     this.router = router;
+    this.sheetWrapperService = sheetWrapperService;
     googleSheet.getInfo().then(data=>this.initAppli(route, data));
    }
 
    initAppli(route:ActivatedRoute, infos:GoogleInfo){
-     this.infos = infos;
-    let pages = [
-      new Couverture(true, false, 0, infos),
-      new Couverture(true, true, 1, infos),
-      new Couverture(false, true, 2, infos),
-      new Couverture(false, false, 3, infos)
-    ];
-    
-    this.startWait = false;
-    this.pageHandler = new Subject();
-    route.params.subscribe(param=>{
-      if(typeof param.page !== 'undefined'){
-        this.startWait = this.page > parseInt(param.page);
-        this.page = parseInt(param.page);
-        this.nextPage = this.page+2;
-        this.previousPage = this.page-2;
-        setTimeout(p=>this.pageHandler.next(this.page));
-      }
+    this.infos = infos;
+    this.sheetWrapperService.getPages().then(pages=>{
+      this.startWait = false;
+      this.pageHandler = new Subject();
+      route.params.subscribe(param=>{
+        if(typeof param.page !== 'undefined'){
+          this.startWait = this.page > parseInt(param.page);
+          this.page = parseInt(param.page);
+          this.nextPage = this.page+2;
+          this.previousPage = this.page-2;
+          setTimeout(p=>this.pageHandler.next(this.page));
+        }
+      });
+      this.feuilles = this.transformToFeuilles(pages);
+      this.nbPages = pages.length;
+      this.loaded = true;
+      setTimeout(p=>this.pageHandler.next(this.page));
     });
-    this.feuilles = this.transformToFeuilles(pages);
-    this.nbPages = pages.length;
-    this.loaded = true;
-    setTimeout(p=>this.pageHandler.next(this.page));
    }
 
    start($event){
@@ -106,7 +105,9 @@ export class LivreComponent implements OnInit {
   affectZindex(){
     this.feuilles.forEach((element, index) => {
       element.recto.zindex = ""+(this.nbPages*2 - Math.abs(this.page - index*2));
-      element.verso.zindex = ""+(this.nbPages*2 - Math.abs(this.page - index*2+1));
+      if(element.verso){
+              element.verso.zindex = ""+(this.nbPages*2 - Math.abs(this.page - index*2+1));
+      }
     });
   }
 
